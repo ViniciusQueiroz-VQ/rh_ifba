@@ -81,7 +81,7 @@ public class DocumentoView extends javax.swing.JFrame {
         LocalOrigemDAO localDAO = new LocalOrigemDAO();
         TipoDAO tipoDAO = new TipoDAO();
 
-        locais = (ArrayList<LocalOrigem>) localDAO.readAllName();
+        locais = localDAO.readAllName();
 
         comboBoxLocalOrigem.removeAllItems();
         comboBoxLocalOrigem.addItem("Selecione um local");
@@ -462,7 +462,7 @@ public class DocumentoView extends javax.swing.JFrame {
             Documento documento = new Documento();
             documento.setIdDoc((Long) tabelaDocumentos.getValueAt(tabelaDocumentos.getSelectedRow(), 0));
             DocumentoDAO dao = new DocumentoDAO();
-            documento = (Documento) dao.findByPrimaryKey(documento);
+            documento = (Documento) dao.findByPrimaryKey(documento.getIdDoc());
             campoNomeDocumento.setText(documento.getNome());
             campoDataDocumento.setText(documento.getDataDocumento());
             campoDescricaoDocumento.setText(documento.getDescricao());
@@ -470,13 +470,13 @@ public class DocumentoView extends javax.swing.JFrame {
             TipoDAO tipoDao = new TipoDAO();
             Tipo tipo = new Tipo();
             tipo.setIdNumero(documento.getIdNumero());
-            tipo = (Tipo) tipoDao.findByPrimaryKey(tipo);
+            tipo = tipoDao.findByPrimaryKey(tipo.getIdNumero());
             comboBoxTipo.setSelectedItem(tipo.getNome());
 
             LocalOrigemDAO origemDao = new LocalOrigemDAO();
             LocalOrigem local = new LocalOrigem();
             local.setIdOrigem(documento.getIdOrigem());
-            local = (LocalOrigem) origemDao.findByPrimaryKey(local);
+            local = origemDao.findByPrimaryKey(local.getIdOrigem());
             comboBoxLocalOrigem.setSelectedItem(local.getNome());
             comboBoxTipoOrigem.setSelectedItem(local.getTipo());
 
@@ -534,9 +534,9 @@ public class DocumentoView extends javax.swing.JFrame {
             //Relacionamento Tipo
             TipoDAO daoTipo = new TipoDAO();
             String nomeTipo = (String) comboBoxTipo.getSelectedItem();
-            Tipo tipo = (Tipo) daoTipo.findByName(nomeTipo);
+            tipos =  daoTipo.findByName(nomeTipo);
 
-            documento.setIdNumero(tipo.getIdNumero());
+            documento.setIdNumero(tipos.get(0).getIdNumero());//O primeiro tipo encontrado esta sendo retornado
 
             //Relacionamento Local_Origem
             LocalOrigemDAO daoLocal = new LocalOrigemDAO();
@@ -598,7 +598,7 @@ public class DocumentoView extends javax.swing.JFrame {
             Documento documento = new Documento();
             documento.setIdDoc((Long) tabelaDocumentos.getValueAt(tabelaDocumentos.getSelectedRow(), 0));
             DocumentoDAO dao = new DocumentoDAO();
-            documento = (Documento) dao.findByPrimaryKey(documento);
+            documento = (Documento) dao.findByPrimaryKey(documento.getIdDoc());
             dao.delete(documento);
 
         } else {

@@ -6,14 +6,13 @@ import model.ServidorFuncaoDocumento;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
-public class ServidorFuncaoDocumentoDAO implements CRUD {
+public class ServidorFuncaoDocumentoDAO {
 
     public ServidorFuncaoDocumentoDAO() {
     }
 
-    @Override
-    public void create(Object o) {
-        ServidorFuncaoDocumento sfd = (ServidorFuncaoDocumento) o;
+    
+    public void create(ServidorFuncaoDocumento sfd) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
 
@@ -32,8 +31,8 @@ public class ServidorFuncaoDocumentoDAO implements CRUD {
         }
     }
 
-    @Override
-    public ArrayList readAll() {
+    
+    public ArrayList<ServidorFuncaoDocumento> readAll() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -63,9 +62,8 @@ public class ServidorFuncaoDocumentoDAO implements CRUD {
         return listaSerFunDoc;
     }
 
-    @Override
-    public Object findByPrimaryKey(Object pk) {
-        ServidorFuncaoDocumento sfd = (ServidorFuncaoDocumento) pk;
+    
+    public ServidorFuncaoDocumento findByPrimaryKey(ServidorFuncaoDocumento sfd ) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -96,9 +94,9 @@ public class ServidorFuncaoDocumentoDAO implements CRUD {
         return sfd;
     }
 
-    @Override
-    public void update(Object o) {
-        ServidorFuncaoDocumento sfd = (ServidorFuncaoDocumento) o;
+    
+    public void update(ServidorFuncaoDocumento sfd) {
+        
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -122,14 +120,14 @@ public class ServidorFuncaoDocumentoDAO implements CRUD {
         }
     }
 
-    @Override
-    public void delete(Object o) {
-        ServidorFuncaoDocumento sfd = (ServidorFuncaoDocumento) o;
+    
+    public void delete(ServidorFuncaoDocumento sfd) {
+        
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            sfd = (ServidorFuncaoDocumento) findByPrimaryKey(sfd);
+            sfd = findByPrimaryKey(sfd);
             String sql = "DELETE FROM Servidor_Funcao_Documento "
                     + "WHERE ID_Doc=? AND ID_Funcao=?;";
             stmt = con.prepareStatement(sql);

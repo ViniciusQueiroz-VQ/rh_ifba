@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import model.LocalOrigem;
 import java.sql.*;
 
-public class LocalOrigemDAO implements CRUD {
+public class LocalOrigemDAO {
 
     public LocalOrigemDAO() {
     }
 
-    @Override
-    public void create(Object o) {
-        LocalOrigem localOrigem = (LocalOrigem) o;
+    public void create(LocalOrigem localOrigem) {
+
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
 
@@ -29,8 +28,7 @@ public class LocalOrigemDAO implements CRUD {
         }
     }
 
-    @Override
-    public ArrayList readAll() {
+    public ArrayList<LocalOrigem> readAll() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -62,8 +60,8 @@ public class LocalOrigemDAO implements CRUD {
         }
         return locaisOrigem;
     }
-    
-     public ArrayList readAllName() {
+
+    public ArrayList<LocalOrigem> readAllName() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -72,11 +70,16 @@ public class LocalOrigemDAO implements CRUD {
             String sql = "SELECT DISTINCT Nome FROM Local_Origem";
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
+
             while (rs.next()) {
                 LocalOrigem localOrigem = new LocalOrigem();
                 localOrigem.setNome(rs.getString("Nome"));
+                localOrigem.setDescricao(rs.getString("Descricao"));
+                localOrigem.setIdOrigem(rs.getInt("ID_Origem"));
+                localOrigem.setTipo(rs.getString("Tipo"));
                 locaisOrigem.add(localOrigem);
             }
+
             System.out.println("Consulta Finalizada com sucesso. \nNumero de "
                     + "Registros:" + locaisOrigem.size());
 
@@ -89,13 +92,12 @@ public class LocalOrigemDAO implements CRUD {
         return locaisOrigem;
     }
 
-    @Override
-    public Object findByPrimaryKey(Object pk) {
-        LocalOrigem localOrigem = (LocalOrigem) pk;
+    public LocalOrigem findByPrimaryKey(int idOrigem) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
+        LocalOrigem localOrigem = new LocalOrigem();
+        
         try {
             String sql = "SELECT "
                     + "ID_Origem, "
@@ -105,7 +107,7 @@ public class LocalOrigemDAO implements CRUD {
                     + "FROM Local_Origem "
                     + "WHERE ID_Origem LIKE ?;";
             stmt = con.prepareStatement(sql);
-            stmt.setInt(1, localOrigem.getIdOrigem());
+            stmt.setInt(1,idOrigem);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -124,12 +126,12 @@ public class LocalOrigemDAO implements CRUD {
         return localOrigem;
     }
 
-    public Object findByName(Object k) {
+    public LocalOrigem findByName(LocalOrigem k) {
         LocalOrigem localOrigem = (LocalOrigem) k;
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        
+
         try {
             String sql = "SELECT ID_Origem, "
                     + "Nome, "
@@ -157,9 +159,7 @@ public class LocalOrigemDAO implements CRUD {
         return localOrigem;
     }
 
-    @Override
-    public void update(Object o) {
-        LocalOrigem localOrigem = (LocalOrigem) o;
+    public void update(LocalOrigem localOrigem) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
@@ -185,14 +185,12 @@ public class LocalOrigemDAO implements CRUD {
         }
     }
 
-    @Override
-    public void delete(Object o) {
-        LocalOrigem localOrigem = (LocalOrigem) o;
+    public void delete(LocalOrigem localOrigem) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
 
         try {
-            localOrigem = (LocalOrigem) findByPrimaryKey(localOrigem);
+            localOrigem = findByPrimaryKey(localOrigem.getIdOrigem());
             String sql = "DELETE FROM Local_Origem WHERE ID_Origem=?;";
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, localOrigem.getIdOrigem());

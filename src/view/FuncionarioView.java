@@ -14,6 +14,11 @@ public class FuncionarioView extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);//Centralizando Janela
         loadTable();
+        comboboxPesquisa.setEnabled(false);
+        campoPesquisa.setEnabled(comboboxPesquisa.isEnabled());
+        botaoCancelar.setEnabled(comboboxPesquisa.isEnabled());
+        botaoConfirmarPesquisa.setEnabled(comboboxPesquisa.isEnabled());
+        
     }
 
     //carregar a tabela com dados do banco
@@ -76,25 +81,25 @@ public class FuncionarioView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        painelDocumento = new javax.swing.JPanel();
+        painelFuncionario = new javax.swing.JPanel();
         botaoCadastrar = new javax.swing.JButton();
         botaoPesquisar = new javax.swing.JButton();
         botaoAtualizar = new javax.swing.JButton();
         campoPesquisa = new javax.swing.JTextField();
         botaoExcluir = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        labelTipoDePesquisa = new javax.swing.JLabel();
+        scrollPaneTabela = new javax.swing.JScrollPane();
         tabelaFuncionarios = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        botaoConfirmarPesquisa = new javax.swing.JButton();
+        botaoCancelar = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
         comboboxPesquisa = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(720, 480));
 
-        painelDocumento.setPreferredSize(new java.awt.Dimension(720, 503));
-        painelDocumento.setRequestFocusEnabled(false);
+        painelFuncionario.setPreferredSize(new java.awt.Dimension(720, 503));
+        painelFuncionario.setRequestFocusEnabled(false);
 
         botaoCadastrar.setText("Cadastrar");
         botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -117,22 +122,6 @@ public class FuncionarioView extends javax.swing.JFrame {
             }
         });
 
-        campoPesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                campoPesquisaFocusGained(evt);
-            }
-        });
-        campoPesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoPesquisaMouseClicked(evt);
-            }
-        });
-        campoPesquisa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoPesquisaActionPerformed(evt);
-            }
-        });
-
         botaoExcluir.setText("Excluir");
         botaoExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +129,7 @@ public class FuncionarioView extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Tipo de Pesquisa");
+        labelTipoDePesquisa.setText("Tipo de Pesquisa");
 
         tabelaFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,25 +139,24 @@ public class FuncionarioView extends javax.swing.JFrame {
                 "CPF", "Nome", "Email", "Cargo", "Telefone Fixo", "Telefone Movel", "Horario de Entrada", "Horario de Saida", "Login"
             }
         ));
-        tabelaFuncionarios.setShowGrid(false);
         tabelaFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaFuncionariosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tabelaFuncionarios);
+        scrollPaneTabela.setViewportView(tabelaFuncionarios);
 
-        jButton4.setText("Pesquisar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        botaoConfirmarPesquisa.setText("Pesquisar");
+        botaoConfirmarPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                botaoConfirmarPesquisaActionPerformed(evt);
             }
         });
 
-        jButton6.setText("Cancelar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        botaoCancelar.setText("Cancelar");
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                botaoCancelarActionPerformed(evt);
             }
         });
 
@@ -181,63 +169,63 @@ public class FuncionarioView extends javax.swing.JFrame {
 
         comboboxPesquisa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "CPF", "Nome" }));
 
-        javax.swing.GroupLayout painelDocumentoLayout = new javax.swing.GroupLayout(painelDocumento);
-        painelDocumento.setLayout(painelDocumentoLayout);
-        painelDocumentoLayout.setHorizontalGroup(
-            painelDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addGroup(painelDocumentoLayout.createSequentialGroup()
-                .addGroup(painelDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDocumentoLayout.createSequentialGroup()
+        javax.swing.GroupLayout painelFuncionarioLayout = new javax.swing.GroupLayout(painelFuncionario);
+        painelFuncionario.setLayout(painelFuncionarioLayout);
+        painelFuncionarioLayout.setHorizontalGroup(
+            painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(scrollPaneTabela)
+            .addGroup(painelFuncionarioLayout.createSequentialGroup()
+                .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFuncionarioLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(botaoVoltar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botaoCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(52, 52, 52)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelDocumentoLayout.createSequentialGroup()
-                        .addGroup(painelDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelDocumentoLayout.createSequentialGroup()
+                        .addComponent(botaoConfirmarPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelFuncionarioLayout.createSequentialGroup()
+                        .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelFuncionarioLayout.createSequentialGroup()
                                 .addGap(56, 56, 56)
                                 .addComponent(botaoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
                                 .addComponent(botaoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelDocumentoLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                            .addGroup(painelFuncionarioLayout.createSequentialGroup()
+                                .addComponent(labelTipoDePesquisa)
                                 .addGap(54, 54, 54)
                                 .addComponent(comboboxPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(31, 31, 31)
-                        .addGroup(painelDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelDocumentoLayout.createSequentialGroup()
+                        .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelFuncionarioLayout.createSequentialGroup()
                                 .addComponent(campoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(painelDocumentoLayout.createSequentialGroup()
+                            .addGroup(painelFuncionarioLayout.createSequentialGroup()
                                 .addComponent(botaoAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
                                 .addComponent(botaoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(257, 257, 257)))))
                 .addContainerGap())
         );
-        painelDocumentoLayout.setVerticalGroup(
-            painelDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDocumentoLayout.createSequentialGroup()
+        painelFuncionarioLayout.setVerticalGroup(
+            painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelFuncionarioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPaneTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(painelDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoPesquisar)
                     .addComponent(botaoCadastrar)
                     .addComponent(botaoAtualizar)
                     .addComponent(botaoExcluir))
                 .addGap(37, 37, 37)
-                .addGroup(painelDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboboxPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(labelTipoDePesquisa))
                 .addGap(86, 86, 86)
-                .addGroup(painelDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton6)
+                .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoConfirmarPesquisa)
+                    .addComponent(botaoCancelar)
                     .addComponent(botaoVoltar))
                 .addGap(0, 37, Short.MAX_VALUE))
         );
@@ -248,14 +236,14 @@ public class FuncionarioView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+                .addComponent(painelFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(painelDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(painelFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -265,6 +253,7 @@ public class FuncionarioView extends javax.swing.JFrame {
         //Criando e Visualizando janela sobreposta (POPUP)
         FuncionarioViewCadastro cadastro = new FuncionarioViewCadastro(this, true);
         cadastro.setVisible(true);
+        loadTable();
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtualizarActionPerformed
@@ -273,26 +262,17 @@ public class FuncionarioView extends javax.swing.JFrame {
             FuncionarioDIREH funcionario = new FuncionarioDIREH();
             funcionario.setCpf((String) tabelaFuncionarios.getValueAt(tabelaFuncionarios.getSelectedRow(), 0));
             FuncionarioDIREHDAO fdao = new FuncionarioDIREHDAO();
-            funcionario = (FuncionarioDIREH) fdao.findByPrimaryKey(funcionario);
+            funcionario = fdao.findByPrimaryKey(funcionario.getCpf());
 
             FuncionarioViewAtualizar atualizar = new FuncionarioViewAtualizar(this, true);
             atualizar.enviarDados(funcionario);
             atualizar.setVisible(true);
-            loadTable();//recarregar a tabela
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um funcionario antes");
         }
-
+        loadTable();//recarregar a tabela
     }//GEN-LAST:event_botaoAtualizarActionPerformed
-
-    private void campoPesquisaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisaMouseClicked
-
-    }//GEN-LAST:event_campoPesquisaMouseClicked
-
-    private void campoPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoPesquisaActionPerformed
-
-    }//GEN-LAST:event_campoPesquisaActionPerformed
 
     private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
         if (tabelaFuncionarios.getSelectedRow() != -1) {
@@ -306,57 +286,57 @@ public class FuncionarioView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botaoExcluirActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void botaoConfirmarPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarPesquisaActionPerformed
 
         FuncionarioDIREHDAO dao = new FuncionarioDIREHDAO();
-        FuncionarioDIREH f = new FuncionarioDIREH();
+        FuncionarioDIREH funcionario;
         String pesquisa = (String) comboboxPesquisa.getSelectedItem();
-        funcionarios.removeAll(funcionarios);
+        funcionarios = new ArrayList<>();
         switch (pesquisa) {
             case "CPF":
-                f.setCpf(pesquisa);
-                f = (FuncionarioDIREH) dao.findByPrimaryKey(f);
-                funcionarios.add(f);
+                funcionario = dao.findByPrimaryKey(campoPesquisa.getText());
+                funcionarios.add(funcionario);
                 break;
             case "Nome":
-                f.setNome(pesquisa);
-                funcionarios = dao.findByName(f);
+                funcionarios = dao.findByName(campoPesquisa.getText());
                 break;
 
             default:
                 JOptionPane.showMessageDialog(null, "Selecione uma opção!");
-                funcionarios.removeAll(funcionarios);
         }
         if (funcionarios.isEmpty()) {
             loadTable();
         } else {
             loadTable(funcionarios);
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_botaoConfirmarPesquisaActionPerformed
 
     private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
 
+        botaoCancelar.setEnabled(true);
+        botaoConfirmarPesquisa.setEnabled(botaoCancelar.isEnabled());
         botaoCadastrar.setEnabled(false);
         botaoAtualizar.setEnabled(false);
         botaoExcluir.setEnabled(false);
         campoPesquisa.setEnabled(true);
+        comboboxPesquisa.setEnabled(true);
+        botaoPesquisar.setEnabled(false);
 
     }//GEN-LAST:event_botaoPesquisarActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        botaoPesquisar.setEnabled(true);
         botaoCadastrar.setEnabled(true);
         botaoAtualizar.setEnabled(true);
         botaoExcluir.setEnabled(true);
         campoPesquisa.setEnabled(false);
-        campoPesquisa.setEnabled(false);
+        comboboxPesquisa.setEnabled(false);
         campoPesquisa.setText("");
+        botaoCancelar.setEnabled(false);
+        botaoConfirmarPesquisa.setEnabled(botaoCancelar.isEnabled());
         loadTable();
 
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void campoPesquisaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_campoPesquisaFocusGained
-
-    }//GEN-LAST:event_campoPesquisaFocusGained
+    }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void tabelaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFuncionariosMouseClicked
         botaoAtualizar.setEnabled(true);
@@ -390,16 +370,16 @@ public class FuncionarioView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAtualizar;
     private javax.swing.JButton botaoCadastrar;
+    private javax.swing.JButton botaoCancelar;
+    private javax.swing.JButton botaoConfirmarPesquisa;
     private javax.swing.JButton botaoExcluir;
     private javax.swing.JButton botaoPesquisar;
     private javax.swing.JButton botaoVoltar;
     private javax.swing.JTextField campoPesquisa;
     private javax.swing.JComboBox<String> comboboxPesquisa;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel painelDocumento;
+    private javax.swing.JLabel labelTipoDePesquisa;
+    private javax.swing.JPanel painelFuncionario;
+    private javax.swing.JScrollPane scrollPaneTabela;
     private javax.swing.JTable tabelaFuncionarios;
     // End of variables declaration//GEN-END:variables
 }

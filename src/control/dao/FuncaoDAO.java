@@ -6,19 +6,15 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.Funcao;
 
-public class FuncaoDAO implements CRUD {
+public class FuncaoDAO {
 
     public FuncaoDAO() {
     }
 
-    @Override
-    public void create(Object o) {
-        Funcao f = (Funcao) o;
-        String nome = f.getNome();
-        Funcao funcao = new Funcao(nome);
+    public void create(Funcao funcao) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
-        if (f.getIdFuncao() != 0) {
+        if (funcao.getIdFuncao() != 0) {
             try {
                 String sql = "INSERT INTO Funcao (Nome) VALUES(?)";
                 stmt = con.prepareStatement(sql);
@@ -31,8 +27,8 @@ public class FuncaoDAO implements CRUD {
         }
     }
 
-    @Override
-    public ArrayList readAll() {
+    
+    public ArrayList<Funcao> readAll() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -62,15 +58,13 @@ public class FuncaoDAO implements CRUD {
         return funcoes;
     }
 
-    @Override
-    public Object findByPrimaryKey(Object pk) {
-        Funcao f = (Funcao) pk;
-        int idFuncao = f.getIdFuncao();
+    
+    public Funcao findByPrimaryKey(int idFuncao) {
+        
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Funcao funcao = new Funcao();
-
         try {
             String sql = "SELECT "
                     + "ID_Funcao,"
@@ -95,9 +89,9 @@ public class FuncaoDAO implements CRUD {
         return funcao;
     }
 
-    @Override
-    public void update(Object o) {
-        Funcao funcao = (Funcao) o;
+    
+    public void update(Funcao funcao) {
+        
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -120,14 +114,14 @@ public class FuncaoDAO implements CRUD {
         }
     }
 
-    @Override
-    public void delete(Object o) {
-        Funcao funcao = (Funcao) o;
+    
+    public void delete(Funcao funcao) {
+
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
 
         try {
-            funcao = (Funcao) findByPrimaryKey(funcao.getIdFuncao());
+            funcao = findByPrimaryKey(funcao.getIdFuncao());
             String sql = "DELETE FROM Funcao WHERE ID_Funcao=?";
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, funcao.getIdFuncao());

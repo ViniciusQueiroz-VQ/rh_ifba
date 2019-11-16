@@ -6,12 +6,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class ConnectionFactory {
 
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String USER = "root";
     private static final String PASS = "admin";
     private static final String HOST = "localhost";
@@ -28,14 +27,14 @@ public class ConnectionFactory {
             throw new RuntimeException("Erro na conexão: ", ex);
         }
     }
-
+    
     public static void closeConnection(Connection con) {
         try {
             if (con != null) {
                 con.close();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão com o banco de dados" +ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão com o banco de dados");
         }
     }
 

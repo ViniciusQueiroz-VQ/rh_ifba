@@ -6,15 +6,16 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import model.FuncionarioDIREH;
 
-public class FuncionarioDIREHDAO implements CRUD {
-
-    @Override
-    public Object findByPrimaryKey(Object o) {
-        FuncionarioDIREH funcionario = (FuncionarioDIREH) o;
+public class FuncionarioDIREHDAO {
+    
+    Connection con;
+    
+    public FuncionarioDIREH findByPrimaryKey(String cpf) {
+        FuncionarioDIREH funcionario = new FuncionarioDIREH();
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        if (!funcionario.getCpf().isEmpty()) {
+        if (!cpf.isEmpty()) {
 
             try {
                 String sql = "SELECT "
@@ -31,7 +32,7 @@ public class FuncionarioDIREHDAO implements CRUD {
                         + "FROM Funcionario_DIREH "
                         + "WHERE CPF_Funcionario=?;";
                 stmt = con.prepareStatement(sql);
-                stmt.setString(1, funcionario.getCpf());
+                stmt.setString(1, cpf);
                 rs = stmt.executeQuery();
 
                 while (rs.next()) {
@@ -57,14 +58,13 @@ public class FuncionarioDIREHDAO implements CRUD {
         return funcionario;
     }
 
-    @Override
-    public void create(Object o) {
-        FuncionarioDIREH funcionarioDIREH = (FuncionarioDIREH) o;
-        Connection con = ConnectionFactory.getConnection();
+    
+    public void create(FuncionarioDIREH funcionario) {
+        con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
         try {
-            if (!funcionarioDIREH.getCpf().equals("")) {
+            if (!funcionario.getCpf().equals("")) {
                 String sql = "INSERT INTO Funcionario_DIREH("
                         + "CPF_Funcionario,"
                         + "Nome,"
@@ -78,16 +78,16 @@ public class FuncionarioDIREHDAO implements CRUD {
                         + "Horario_Saida) "
                         + "VALUES (?,?,?,?,?,?,?,?,?,?)";
                 stmt = con.prepareStatement(sql);
-                stmt.setString(1, funcionarioDIREH.getCpf());
-                stmt.setString(2, funcionarioDIREH.getNome());
-                stmt.setString(3, funcionarioDIREH.getLogin());
-                stmt.setString(4, funcionarioDIREH.getSenha());
-                stmt.setString(5, funcionarioDIREH.getEmail());
-                stmt.setLong(6, funcionarioDIREH.getTelefoneFixo());
-                stmt.setLong(7, funcionarioDIREH.getTelefoneMovel());
-                stmt.setString(8, funcionarioDIREH.getCargo());
-                stmt.setString(9, funcionarioDIREH.getHorarioEntrada());
-                stmt.setString(10, funcionarioDIREH.getHorarioSaida());
+                stmt.setString(1, funcionario.getCpf());
+                stmt.setString(2, funcionario.getNome());
+                stmt.setString(3, funcionario.getLogin());
+                stmt.setString(4, funcionario.getSenha());
+                stmt.setString(5, funcionario.getEmail());
+                stmt.setLong(6, funcionario.getTelefoneFixo());
+                stmt.setLong(7, funcionario.getTelefoneMovel());
+                stmt.setString(8, funcionario.getCargo());
+                stmt.setString(9, funcionario.getHorarioEntrada());
+                stmt.setString(10, funcionario.getHorarioSaida());
                 stmt.execute();
 
             }
@@ -99,9 +99,9 @@ public class FuncionarioDIREHDAO implements CRUD {
         }
     }
 
-    @Override
-    public ArrayList readAll() {
-        Connection con = ConnectionFactory.getConnection();
+    
+    public ArrayList<FuncionarioDIREH> readAll() {
+        con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         ArrayList<FuncionarioDIREH> funcionarios = new ArrayList<>();
@@ -144,10 +144,10 @@ public class FuncionarioDIREHDAO implements CRUD {
         return funcionarios;
     }
 
-    @Override
-    public void update(Object o) {
-        FuncionarioDIREH funcionarioDIREH = (FuncionarioDIREH) o;//Convertendo o Objeto para um modelo
-        Connection con = ConnectionFactory.getConnection();// Obtendo conexão com o banco de dados
+    
+    public void update(FuncionarioDIREH funcionario) {
+        
+        con = ConnectionFactory.getConnection();// Obtendo conexão com o banco de dados
         PreparedStatement stmt = null;//Objeto que prepara a consulta SQL
 
         try {
@@ -164,16 +164,16 @@ public class FuncionarioDIREHDAO implements CRUD {
                     + "WHERE CPF_Funcionario=?";
             stmt = con.prepareStatement(sql);
 
-            stmt.setString(1, funcionarioDIREH.getNome());
-            stmt.setString(2, funcionarioDIREH.getLogin());
-            stmt.setString(3, funcionarioDIREH.getSenha());
-            stmt.setString(4, funcionarioDIREH.getEmail());
-            stmt.setLong(5, funcionarioDIREH.getTelefoneFixo());
-            stmt.setLong(6, funcionarioDIREH.getTelefoneMovel());
-            stmt.setString(7, funcionarioDIREH.getCargo());
-            stmt.setString(8, funcionarioDIREH.getHorarioEntrada());
-            stmt.setString(9, funcionarioDIREH.getHorarioSaida());
-            stmt.setString(10, funcionarioDIREH.getCpf());
+            stmt.setString(1, funcionario.getNome());
+            stmt.setString(2, funcionario.getLogin());
+            stmt.setString(3, funcionario.getSenha());
+            stmt.setString(4, funcionario.getEmail());
+            stmt.setLong(5, funcionario.getTelefoneFixo());
+            stmt.setLong(6, funcionario.getTelefoneMovel());
+            stmt.setString(7, funcionario.getCargo());
+            stmt.setString(8, funcionario.getHorarioEntrada());
+            stmt.setString(9, funcionario.getHorarioSaida());
+            stmt.setString(10, funcionario.getCpf());
 
             stmt.executeUpdate();
 
@@ -185,14 +185,14 @@ public class FuncionarioDIREHDAO implements CRUD {
         }
     }
 
-    @Override
-    public void delete(Object o) {
-        FuncionarioDIREH funcionario = (FuncionarioDIREH) o;//Converte o objeto para um Model
-        Connection con = ConnectionFactory.getConnection(); // Abre a conexão com o banco
+    
+    public void delete(FuncionarioDIREH funcionario) {
+        
+        con = ConnectionFactory.getConnection(); // Abre a conexão com o banco
         PreparedStatement stmt;//Objeto que prepara a consulta SQL
 
         try {
-            funcionario = (FuncionarioDIREH) findByPrimaryKey(funcionario);
+            funcionario = findByPrimaryKey(funcionario.getCpf());
             //Verificar se o Funcionario Existe
             if (!funcionario.getCpf().isEmpty()) {
                 stmt = con.prepareStatement("DELETE FROM Funcionario_DIREH WHERE CPF_Funcionario = ?");
@@ -211,10 +211,48 @@ public class FuncionarioDIREHDAO implements CRUD {
         }
     }
 
-    public ArrayList findByName(Object o) {
+    public ArrayList<FuncionarioDIREH> findByName(String name) {
+        con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
         ArrayList<FuncionarioDIREH> funcionarios = new ArrayList<>();
-        
+        try {
+            String sql = "SELECT CPF_Funcionario,"
+                    + "Nome,"
+                    + "Login, "
+                    + "Senha,"
+                    + "Email,"
+                    + "Telefone_Fixo,"
+                    + "Telefone_Movel,"
+                    + "Cargo,"
+                    + "Horario_Entrada,"
+                    + "Horario_Saida "
+                    + "FROM Funcionario_DIREH "
+                    + "WHERE Nome LIKE '%"+name+"%'";
+            stmt = con.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                FuncionarioDIREH funcionario = new FuncionarioDIREH();
+                funcionario.setCpf(rs.getString("CPF_Funcionario"));
+                funcionario.setNome(rs.getString("Nome"));
+                funcionario.setLogin(rs.getString("Login"));
+                funcionario.setEmail(rs.getString("Email"));
+                funcionario.setSenha(rs.getString("Senha"));
+                funcionario.setTelefoneFixo(rs.getLong("Telefone_Fixo"));
+                funcionario.setTelefoneMovel(rs.getLong("Telefone_Movel"));
+                funcionario.setCargo(rs.getString("Cargo"));
+                funcionario.setHorarioEntrada(rs.getString("Horario_Entrada"));
+                funcionario.setHorarioSaida(rs.getString("Horario_Saida"));
+                funcionarios.add(funcionario);
+            }
+
+            System.out.println("Consulta Finalizada com sucesso! \nNumero de Registros:" + funcionarios.size());
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar todos os Funcionarios:\n" + ex.getMessage());
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
         return funcionarios;
     }
-
 }

@@ -8,26 +8,23 @@ import model.Administra;
 import model.Documento;
 import model.FuncionarioDIREH;
 
-public class AdministraDAO implements CRUD {
+public class AdministraDAO {
 
     public AdministraDAO() {
     }
 
-    @Override
-    public Object findByPrimaryKey(Object pk) {
-        Administra administra = (Administra) pk;
-
-        FuncionarioDIREHDAO funcionarioDIREHDAO = new FuncionarioDIREHDAO();
+    public Object findByPrimaryKey(Administra administra) {
+        FuncionarioDIREHDAO dao = new FuncionarioDIREHDAO();
         DocumentoDAO documentoDAO = new DocumentoDAO();
         /*Consultado a existencia do funcionario e do documento
          *Assim a consulta só é executada se ambos registros estão nas tabelas
          *Em questão
          */
-        FuncionarioDIREH f = (FuncionarioDIREH) funcionarioDIREHDAO.findByPrimaryKey(administra.getCpfFuncionario());
-        Documento d = (Documento) documentoDAO.findByPrimaryKey(administra.getIdDocumento());
+        FuncionarioDIREH f = dao.findByPrimaryKey(administra.getCpfFuncionario());
+        Documento documento = documentoDAO.findByPrimaryKey(administra.getIdDocumento());
 
         String cpf = f.getCpf();
-        long idDocumento = d.getIdDoc();
+        long idDocumento = documento.getIdDoc();
 
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -61,9 +58,8 @@ public class AdministraDAO implements CRUD {
         return administra;
     }
 
-    @Override
-    public void create(Object o) {
-        Administra administra = (Administra) o;
+    public void create(Administra administra) {
+
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -84,14 +80,13 @@ public class AdministraDAO implements CRUD {
             }
             System.out.println("Cadastrado com sucesso");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Erro ao cadastrar o documento ou funcionario: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar o documento ou funcionario: " + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
 
-    @Override
-    public ArrayList readAll() {
+    public ArrayList<Administra> readAll() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -120,16 +115,14 @@ public class AdministraDAO implements CRUD {
             System.out.println("Consulta Finalizada com sucesso. \nNumero de Registros:" + administrados.size());
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Erro ao Consultar todos os Funcionarios:\n" + ex.getMessage(),"Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Erro ao Consultar todos os Funcionarios:\n" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         } finally {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
         return administrados;
     }
 
-    @Override
-    public void update(Object o) {
-        Administra funcionario = (Administra) o;
+    public void update(Administra administra) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -139,23 +132,21 @@ public class AdministraDAO implements CRUD {
                     + "WHERE CPF_Funcionario=? AND ID_Doc=?";
             stmt = con.prepareStatement(sql);
 
-            stmt.setString(1, funcionario.getDataAtualizacao());
-            stmt.setString(2, funcionario.getCpfFuncionario());
-            stmt.setInt(3, funcionario.getIdDocumento());
+            stmt.setString(1, administra.getDataAtualizacao());
+            stmt.setString(2, administra.getCpfFuncionario());
+            stmt.setInt(3, administra.getIdDocumento());
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso");
         } catch (SQLException ex) {
 
-            JOptionPane.showMessageDialog(null,"Erro ao atualizar" + ex.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar" + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
 
-    @Override
-    public void delete(Object o) {
-        Administra administra = (Administra) o;
+    public void delete(Administra administra) {
         String cpf = administra.getCpfFuncionario();
         long idDocumento = administra.getIdDocumento();
 
@@ -174,7 +165,7 @@ public class AdministraDAO implements CRUD {
         PreparedStatement stmt;
 
         try {
-            
+
             stmt = con.prepareStatement("DELETE FROM Administra WHERE CPF_Funcionario = ? AND ID_Doc=?");
             stmt.setString(1, cpf);
             stmt.setLong(1, idDocumento);
@@ -182,7 +173,7 @@ public class AdministraDAO implements CRUD {
             System.out.println("Deletado com sucesso");
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Erro ao deletar" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao deletar" + ex.getMessage());
         } finally {
             ConnectionFactory.closeConnection(con);
         }

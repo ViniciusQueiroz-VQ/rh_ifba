@@ -15,6 +15,7 @@ public class FuncionarioViewAtualizar extends javax.swing.JDialog {
         campoCpf.setText(funcionario.getCpf());
         campoNome.setText(funcionario.getNome());
         campoEmail.setText(funcionario.getEmail());
+        campoCargo.setText(funcionario.getCargo());
         campoHorarioEntrada.setText(funcionario.getHorarioEntrada());
         campoHorarioSaida.setText(funcionario.getHorarioSaida());
         campoTelefoneFixo.setText(String.valueOf(funcionario.getTelefoneFixo()));

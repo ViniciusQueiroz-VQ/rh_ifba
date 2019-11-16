@@ -6,19 +6,19 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.Servidor;
 
-public class ServidorDAO implements CRUD {
+public class ServidorDAO {
 
     public ServidorDAO() {
     }
 
-    @Override
-    public Object findByPrimaryKey(Object o) {
-        Servidor servidor = (Servidor) o;
+    public Servidor findByPrimaryKey(String cpfServidor) {
+        
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        Servidor servidor = new Servidor();
 
-        if (!servidor.getCpfServidor().isEmpty()) {
+        if (!cpfServidor.isEmpty()) {
             try {
                 String sql = "SELECT "
                         + "CPF_Servidor,"
@@ -34,7 +34,7 @@ public class ServidorDAO implements CRUD {
                         + "Ultimo_Acesso"
                         + "WHERE CPF_Servidor=?;";
                 stmt = con.prepareStatement(sql);
-                stmt.setString(1, servidor.getCpfServidor());
+                stmt.setString(1, cpfServidor);
                 rs = stmt.executeQuery();
 
                 while (rs.next()) {
@@ -63,9 +63,8 @@ public class ServidorDAO implements CRUD {
         return servidor;
     }
 
-    @Override
-    public void create(Object o) {
-        Servidor servidor = (Servidor) o;
+    
+    public void create(Servidor servidor) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -109,8 +108,8 @@ public class ServidorDAO implements CRUD {
         }
     }
 
-    @Override
-    public ArrayList readAll() {
+    
+    public ArrayList<Servidor> readAll() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -156,8 +155,8 @@ public class ServidorDAO implements CRUD {
         return servidores;
     }
 
-    @Override
-    public void update(Object o) {
+    
+    public void update(Servidor o) {
         Servidor servidor = (Servidor) o;
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -203,11 +202,11 @@ public class ServidorDAO implements CRUD {
         }
     }
 
-    @Override
-    public void delete(Object o) {
-        Servidor servidor = (Servidor) o;
+    
+    public void delete(Servidor servidor) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
+        
         if (!servidor.getCpfServidor().isEmpty()) {
             try {
                 servidor = (Servidor) findByPrimaryKey(servidor.getCpfServidor());

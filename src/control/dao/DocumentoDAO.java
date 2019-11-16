@@ -5,13 +5,12 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import model.Documento;
 
-public class DocumentoDAO implements CRUD {
+public class DocumentoDAO {
     public DocumentoDAO() {
     }
-
-    @Override
-    public void create(Object o) {
-        Documento documento = (Documento) o;
+    
+    public void create(Documento documento) {
+        
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -46,8 +45,8 @@ public class DocumentoDAO implements CRUD {
         }
     }
 
-    @Override
-    public ArrayList readAll() {
+    
+    public ArrayList<Documento> readAll() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -91,12 +90,12 @@ public class DocumentoDAO implements CRUD {
         return documentos;
     }
 
-    @Override
-    public Object findByPrimaryKey(Object o) {
-        Documento documento = (Documento) o;
+    
+    public Documento findByPrimaryKey(long idDoc) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        Documento documento = new Documento();
 
         try {
             String sql = "SELECT "
@@ -113,7 +112,7 @@ public class DocumentoDAO implements CRUD {
                     + "WHERE ID_Doc=?;";
 
             stmt = con.prepareStatement(sql);
-            stmt.setLong(1, documento.getIdDoc());
+            stmt.setLong(1, idDoc);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -135,9 +134,8 @@ public class DocumentoDAO implements CRUD {
         return documento;
     }
 
-    @Override
-    public void update(Object o) {
-        Documento documento = (Documento) o;
+    
+    public void update(Documento documento) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
@@ -166,15 +164,13 @@ public class DocumentoDAO implements CRUD {
         }
     }
 
-    @Override
-    public void delete(Object o) {
-
-        Documento documento = (Documento) o;
+    
+    public void delete(Documento documento) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
 
         try {
-            documento = (Documento) findByPrimaryKey(documento);
+            documento = (Documento) findByPrimaryKey(documento.getIdDoc());
             stmt = con.prepareStatement("DELETE FROM Documento WHERE ID_Doc = ?");
             stmt.setLong(1, documento.getIdDoc());
             stmt.executeUpdate();
@@ -187,12 +183,12 @@ public class DocumentoDAO implements CRUD {
         }
     }
 
-    public ArrayList findByDate(String date) {
+    public ArrayList<Documento> findByDate(String date) {
         //Busca por Data do Documento
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        ArrayList documentos = new ArrayList<Documento>();
+        ArrayList documentos = new ArrayList<>();
         try {
             String sql = "SELECT "
                     + "Tamanho,"
@@ -237,7 +233,7 @@ public class DocumentoDAO implements CRUD {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        ArrayList documentos = new ArrayList<Documento>();
+        ArrayList documentos = new ArrayList<>();
         try {
             String sql = "SELECT "
                     + "Tamanho,"
@@ -282,7 +278,7 @@ public class DocumentoDAO implements CRUD {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        ArrayList documentos = new ArrayList<Documento>();
+        ArrayList documentos = new ArrayList<>();
         try {
             String sql = "SELECT ID_Doc, Nome, Tamanho, Data_Criacao, Descricao, Data_Documento, Arquivo_Documento, ID_Numero, ID_Origem, Arquivo_Documento"
                     + "FROM Documento "
@@ -321,7 +317,7 @@ public class DocumentoDAO implements CRUD {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        ArrayList documentos = new ArrayList<Documento>();
+        ArrayList documentos = new ArrayList<>();
         try {
             String sql = "SELECT a.Tamanho, a.Nome, a.Data_Criacao, a.Descricao, "
                     + "a.Data_Documento, a.Arquivo_Documento,a.ID_Doc, a.ID_Numero, "

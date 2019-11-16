@@ -5,14 +5,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import model.Tipo;
 
-public class TipoDAO implements CRUD {
+public class TipoDAO {
 
     public TipoDAO() {
     }
 
-    @Override
-    public void create(Object o) {
-        Tipo tipo = (Tipo) o;
+    
+    public void create(Tipo tipo) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
         try {
@@ -26,8 +25,8 @@ public class TipoDAO implements CRUD {
         }
     }
 
-    @Override
-    public ArrayList readAll() {
+    
+    public ArrayList<Tipo> readAll() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -55,7 +54,8 @@ public class TipoDAO implements CRUD {
         }
         return tipos;
     }
-    public ArrayList readAllName() {
+    
+    public ArrayList<Tipo> readAllName() {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -81,13 +81,12 @@ public class TipoDAO implements CRUD {
         return tipos;
     }
 
-    @Override
-    public Object findByPrimaryKey(Object o) {
-        Tipo tipo = (Tipo) o;
+    
+    public Tipo findByPrimaryKey(int idNumero) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
+        Tipo tipo = new Tipo();
         try {
             String sql = "SELECT "
                     + "ID_Numero, "
@@ -95,7 +94,7 @@ public class TipoDAO implements CRUD {
                     + "FROM Tipo "
                     + "WHERE ID_Numero=?;";
             stmt = con.prepareStatement(sql);
-            stmt.setInt(1, tipo.getIdNumero());
+            stmt.setInt(1, idNumero);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -112,26 +111,27 @@ public class TipoDAO implements CRUD {
         return tipo;
     }
 
-    public Object findByName(Object k) {
-        String nome = (String) k;
+    public ArrayList<Tipo> findByName(String name) {
+       
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Tipo tipo = null;
+        ArrayList<Tipo> tipos = new ArrayList<>();
         try {
             String sql = "SELECT "
                     + "ID_Numero, "
                     + "Nome "
                     + "FROM Tipo "
-                    + "WHERE Nome LIKE ?";
+                    + "WHERE Nome LIKE '%"+name+"%'";
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, nome);
-            rs = stmt.executeQuery();
-            tipo = new Tipo();
             
+            rs = stmt.executeQuery();
+            
+            
+            Tipo tipo;
             while (rs.next()) {
-                tipo.setIdNumero(rs.getInt("ID_Numero"));
-                tipo.setNome(rs.getString("Nome"));
+                tipo = new Tipo(rs.getInt("ID_Numero"),rs.getString("Nome"));
+                tipos.add(tipo);
             }
 
         } catch (SQLException ex) {
@@ -140,12 +140,11 @@ public class TipoDAO implements CRUD {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
 
-        return tipo;
+        return tipos;
     }
 
-    @Override
-    public void update(Object o) {
-        Tipo tipo = (Tipo) o;
+    
+    public void update(Tipo tipo) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
 
@@ -167,14 +166,14 @@ public class TipoDAO implements CRUD {
         }
     }
 
-    @Override
-    public void delete(Object o) {
-        Tipo tipo = (Tipo) o;
+    
+    public void delete(Tipo tipo) {
+        
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
 
         try {
-            tipo = (Tipo) findByPrimaryKey(tipo);
+            tipo = (Tipo) findByPrimaryKey(tipo.getIdNumero());
             String sql = "DELETE FROM Tipo WHERE ID_Numero=?;";
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, tipo.getIdNumero());
