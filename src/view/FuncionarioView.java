@@ -275,7 +275,8 @@ public class FuncionarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAtualizarActionPerformed
 
     private void botaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirActionPerformed
-        if (tabelaFuncionarios.getSelectedRow() != -1) {
+        JOptionPane.showMessageDialog(null, "");
+        if (tabelaFuncionarios.getSelectedRow() > -1) {
             FuncionarioDIREH funcionario = new FuncionarioDIREH();
             funcionario.setCpf((String) tabelaFuncionarios.getValueAt(tabelaFuncionarios.getSelectedRow(), 0));
             FuncionarioDIREHDAO fdao = new FuncionarioDIREHDAO();
