@@ -1,4 +1,4 @@
-# rh_ifba
+# RH IFBA
 Software Desenvolvido como Critério de Avaliação da Disciplina de Banco de Dados 02
 
 Requisitos
