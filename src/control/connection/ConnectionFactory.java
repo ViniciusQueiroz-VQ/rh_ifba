@@ -16,7 +16,7 @@ public class ConnectionFactory {
     private static final String HOST = "localhost";
     private static final String PORT = "3306";
     private static final String DATABASE = "RH_IFBA";
-    private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
+    private static final String URL = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE +"?useTimezone=true&serverTimezone=UTC";
     
     // DRIVER MYSQL (DRIVER - PORTA DE ENTRADA - USUARIO - SENHA)
     public static Connection getConnection() {
