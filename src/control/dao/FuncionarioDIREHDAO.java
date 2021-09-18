@@ -30,7 +30,7 @@ public class FuncionarioDIREHDAO {
                         + "Horario_Entrada,"
                         + "Horario_Saida "
                         + "FROM Funcionario_DIREH "
-                        + "WHERE CPF_Funcionario=?;";
+                        + "WHERE CPF_Funcionario LIKE ?;";
                 stmt = con.prepareStatement(sql);
                 stmt.setString(1, cpf);
                 rs = stmt.executeQuery();
@@ -46,9 +46,7 @@ public class FuncionarioDIREHDAO {
                     funcionario.setCargo(rs.getString("Cargo"));
                     funcionario.setHorarioEntrada(rs.getString("Horario_Entrada"));
                     funcionario.setHorarioSaida(rs.getString("Horario_Saida"));
-
                 }
-
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao pesquisar" + ex.getMessage());
             } finally {

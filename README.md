@@ -9,5 +9,5 @@ Mysql ou MariaDB
 Instalação
   Com o projeto aberto:
   Adicione o conector baixando, clicando com o botão em Bibliotecas -> Adicionar de JAR
-
+  Crie um banco de dados com o nome de RH_IFBA, comforme exemplo em /Docs - Modelo Conceitual - Físico - Lógico/Físico - SQL/CREATE_RH_IFBA.sql
 Padrão MVC (Model - View - Controller)
